@@ -21,6 +21,7 @@ const formatDate = (date) => {
 };
 
 export default {
+  name: 'task-filter',
   props: {
     done: Boolean,
     from: Date,
