@@ -20,7 +20,7 @@ export const EVENTS = {
 };
 
 export default {
-  name: 'note',
+  name: 'task',
   props: {
     id: { type: Number, required: true },
     title: { type: String, default: '' },
