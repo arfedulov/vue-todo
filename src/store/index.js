@@ -5,9 +5,6 @@ import { logger } from '../logger';
 const info = logger('info');
 const error = logger('error');
 
-
-const api = {};
-
 Vue.use(Vuex);
 
 export const mutations = {
@@ -32,58 +29,61 @@ export const mutations = {
   },
 };
 
+export const actions = {
+  async syncTasks(context) {
+    info('sync tasks starting...');
+    try {
+      if (!await context.api.isFresh()) {
+        const tasks = await context.api.getTasks();
+        context.commit('loadTasks', tasks);
+      }
+      info('sync tasks end successfuly');
+    } catch (err) {
+      error(err);
+    }
+  },
+  async createTask(context, task) {
+    info(`create task ${task.id} starting...`);
+    try {
+      if (await context.api.createTask(task)) {
+        context.commit('createTask', task);
+        info(`create task ${task.id} end successfuly`);
+      }
+    } catch (err) {
+      error(err);
+    }
+  },
+  async deleteTask(context, id) {
+    info(`delete task ${id} starting...`);
+    try {
+      if (await context.api.deleteTask(id)) {
+        context.commit('deleteTask', id);
+        info(`delete task ${id} end successfuly`);
+      }
+    } catch (err) {
+      error(err);
+    }
+  },
+  async updateTask(context, task) {
+    info(`update task ${task.id} starting...`);
+    try {
+      if (await context.api.updateTask(task)) {
+        context.commit('updateTask', task);
+        info(`update task ${task.id} end successfuly`);
+      }
+    } catch (err) {
+      error(err);
+    }
+  },
+};
+
 export default new Vuex.Store({
+  api: {},
   state: {
     tasks: [],
   },
   mutations,
-  actions: {
-    async syncTasks(context) {
-      info('sync tasks starting...');
-      try {
-        if (!await api.isFresh()) {
-          const tasks = await api.getTasks();
-          context.commit('loadTasks', tasks);
-        }
-        info('sync tasks end successfuly');
-      } catch (err) {
-        error(err);
-      }
-    },
-    async createTask(context, task) {
-      info(`create task ${task.id} starting...`);
-      try {
-        if (await api.createTask(task)) {
-          context.commit('createTask', task);
-          info(`create task ${task.id} end successfuly`);
-        }
-      } catch (err) {
-        error(err);
-      }
-    },
-    async deleteTask(context, id) {
-      info(`delete task ${id} starting...`);
-      try {
-        if (await api.deleteTask()) {
-          context.commit('deleteTask', id);
-          info(`delete task ${id} end successfuly`);
-        }
-      } catch (err) {
-        error(err);
-      }
-    },
-    async updateTask(context, task) {
-      info(`update task ${task.id} starting...`);
-      try {
-        if (await api.updateTask(task)) {
-          context.commit('updateTask', task);
-          info(`update task ${task.id} end successfuly`);
-        }
-      } catch (err) {
-        error(err);
-      }
-    },
-  },
+  actions,
   modules: {
   },
 });
