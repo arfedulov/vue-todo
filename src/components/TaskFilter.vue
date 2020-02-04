@@ -32,8 +32,8 @@ export default {
       get() {
         return this.done;
       },
-      set() {
-        this.toggleDone();
+      set(val) {
+        this.toggleDone(val);
       },
     },
     fromModel: {
@@ -54,8 +54,8 @@ export default {
     },
   },
   methods: {
-    toggleDone() {
-      if (this.done) {
+    toggleDone(done) {
+      if (!done) {
         this.$emit(EVENTS.EXCLUDE_DONE);
       } else {
         this.$emit(EVENTS.INCLUDE_DONE);

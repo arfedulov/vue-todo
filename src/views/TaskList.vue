@@ -14,6 +14,8 @@
           :id="task.id"
           :title="task.title"
           :content="task.content"
+          :done="task.done"
+          :updatedAt="task.updatedAt"
           @task:delete="deleteTask"
           @task:change="updateTask"
           @task:done="updateTask({id: task.id, done: true})"
@@ -31,11 +33,11 @@ import TaskFilter from '@/components/TaskFilter.vue';
 import Toolbar from '@/components/Toolbar.vue';
 
 export const filterTasks = (tasks, filters) => {
-  const { range, done } = filters;
+  const { range, done: includeDoneAlso } = filters;
   const filtered = (tasks || []).filter((task) => {
-    let result = true;
-    if (done) {
-      result = task.done;
+    let result = !task.done;
+    if (includeDoneAlso) {
+      result = true;
     }
     if (range[0]) {
       result = task.updatedAt >= range[0];
@@ -44,10 +46,10 @@ export const filterTasks = (tasks, filters) => {
       result = task.updatedAt <= range[1];
     }
     if (range[0] && range[1]) {
-      result = task.updatedAt >= range[0] && task.updatedAt <= range[1];
+      result = task.updatedAt >= range[0] && task.updatedAt <= range[1] && !task.done;
     }
-    if (range[0] && range[1] && done) {
-      result = task.updatedAt >= range[0] && task.updatedAt <= range[1] && task.done;
+    if (range[0] && range[1] && includeDoneAlso) {
+      result = task.updatedAt >= range[0] && task.updatedAt <= range[1];
     }
     return result;
   });
@@ -92,10 +94,16 @@ export default {
       this.$store.dispatch('updateTask', task);
     },
     filterByRange(range) {
-      this.filters.range = range;
+      this.filters = {
+        ...this.filters,
+        range,
+      };
     },
     filterByDoneStatus(done) {
-      this.filters.done = done;
+      this.filters = {
+        ...this.filters,
+        done,
+      };
     },
   },
 };

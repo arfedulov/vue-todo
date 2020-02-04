@@ -30,6 +30,7 @@ export default {
     title: { type: String, default: '' },
     content: { type: String, default: '' },
     done: { type: Boolean, default: false },
+    updatedAt: { type: Date, required: true },
   },
   data() {
     return {
@@ -57,8 +58,8 @@ export default {
       get() {
         return this.done;
       },
-      set() {
-        this.setStatus(!this.done);
+      set(val) {
+        this.setStatus(val);
       },
     },
   },
