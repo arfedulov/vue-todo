@@ -1,4 +1,2 @@
 
-- implement and test createTask() method on root view, that dispatch
-createTask action
 - implement editable and readonly modes on Task

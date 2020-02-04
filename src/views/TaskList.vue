@@ -1,6 +1,6 @@
 <template>
   <div>
-    <toolbar></toolbar>
+    <toolbar @toolbar:create-task="createTask"></toolbar>
     <task-filter
       @task-filter:include-done="filterByDoneStatus(true)"
       @task-filter:exclude-done="filterByDoneStatus(false)"
