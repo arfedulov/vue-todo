@@ -1,0 +1,6 @@
+- implement filtering on TaskList
+- dont use router
+- implement root view with toolbar
+- implement and test createTask() method on root view, that dispatch
+createTask action
+- implement editable and readonly modes on Task

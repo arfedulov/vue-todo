@@ -23,15 +23,51 @@
 import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
 
+export const filterTasks = (tasks, filters) => {
+  const { range, done } = filters;
+  const filtered = tasks.filter((task) => {
+    let result = true;
+    if (done) {
+      result = task.done;
+    }
+    if (range[0]) {
+      result = task.updatedAt >= range[0];
+    }
+    if (range[1]) {
+      result = task.updatedAt <= range[1];
+    }
+    if (range[0] && range[1]) {
+      result = task.updatedAt >= range[0] && task.updatedAt <= range[1];
+    }
+    if (range[0] && range[1] && done) {
+      result = task.updatedAt >= range[0] && task.updatedAt <= range[1] && task.done;
+    }
+    return result;
+  });
+
+  return filtered;
+};
+
 export default {
   name: 'task-list',
   components: {
     task: Task,
     'task-filter': TaskFilter,
   },
+  data() {
+    return {
+      filters: {
+        range: [],
+        done: false,
+      },
+    };
+  },
   computed: {
     tasks() {
       return this.$store.state.tasks;
+    },
+    filteredTasks() {
+      return filterTasks(this.$store.state.tasks, this.data.filters);
     },
   },
   created() {
