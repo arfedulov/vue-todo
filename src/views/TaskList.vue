@@ -1,5 +1,6 @@
 <template>
   <div>
+    <toolbar></toolbar>
     <task-filter
       @task-filter:include-done="filterByDoneStatus(true)"
       @task-filter:exclude-done="filterByDoneStatus(false)"
@@ -27,6 +28,7 @@
 <script>
 import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
+import Toolbar from '@/components/Toolbar.vue';
 
 export const filterTasks = (tasks, filters) => {
   const { range, done } = filters;
@@ -58,6 +60,7 @@ export default {
   components: {
     task: Task,
     'task-filter': TaskFilter,
+    toolbar: Toolbar,
   },
   data() {
     return {
