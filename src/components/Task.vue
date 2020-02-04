@@ -1,10 +1,12 @@
 <template>
-  <article>
+  <article tabindex="0" @focus="editable=true" @blur="editable=false">
     <h1>
-      <input type="text" class="task-title-control" v-model="titleModel" />
+      <input v-if="editable" type="text" class="task-title-control" v-model="titleModel" />
+      <template v-else>{{title}}</template>
     </h1>
     <p>
-      <textarea class="task-content-control" v-model="contentModel"></textarea>
+      <textarea v-if="editable" class="task-content-control" v-model="contentModel"></textarea>
+      <template v-else>{{content}}</template>
     </p>
     <input type="checkbox" class="task-status-control" v-model="statusModel" />
     <button class="task-remove-control" @click="remove">delete</button>
@@ -26,6 +28,11 @@ export default {
     title: { type: String, default: '' },
     content: { type: String, default: '' },
     done: { type: Boolean, default: false },
+  },
+  data() {
+    return {
+      editable: false,
+    };
   },
   computed: {
     titleModel: {
