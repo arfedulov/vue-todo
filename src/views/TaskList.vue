@@ -1,8 +1,13 @@
 <template>
   <div>
-    <task-filter></task-filter>
+    <task-filter
+      @task-filter:include-done="filterByDoneStatus(true)"
+      @task-filter:exclude-done="filterByDoneStatus(false)"
+      @task-filter:use-range="filterByRange"
+    >
+    </task-filter>
     <ul>
-      <li v-for="task of tasks" :key="task.id">
+      <li v-for="task of filteredTasks" :key="task.id">
         <task
           class="task"
           :id="task.id"
@@ -82,6 +87,12 @@ export default {
     },
     updateTask(task) {
       this.$store.dispatch('updateTask', task);
+    },
+    filterByRange(range) {
+      this.filters.range = range;
+    },
+    filterByDoneStatus(done) {
+      this.filters.done = done;
     },
   },
 };
