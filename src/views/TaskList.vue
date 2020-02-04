@@ -32,24 +32,22 @@ import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
 import Toolbar from '@/components/Toolbar.vue';
 
+// eslint-disable-next-line no-restricted-globals
+const isValidDate = date => date && !isNaN(date.getTime());
+
 export const filterTasks = (tasks, filters) => {
   const { range, done: includeDoneAlso } = filters;
   const filtered = (tasks || []).filter((task) => {
-    let result = !task.done;
-    if (includeDoneAlso) {
-      result = true;
+    let result = includeDoneAlso ? true : !task.done;
+    if (isValidDate(range[0])) {
+      result = task.updatedAt >= range[0] && result;
     }
-    if (range[0]) {
-      result = task.updatedAt >= range[0];
+    if (isValidDate(range[1])) {
+      result = task.updatedAt <= range[1] && result;
     }
-    if (range[1]) {
-      result = task.updatedAt <= range[1];
-    }
-    if (range[0] && range[1]) {
-      result = task.updatedAt >= range[0] && task.updatedAt <= range[1] && !task.done;
-    }
-    if (range[0] && range[1] && includeDoneAlso) {
-      result = task.updatedAt >= range[0] && task.updatedAt <= range[1];
+    if (isValidDate(range[0]) && isValidDate(range[1])) {
+      result = task.updatedAt >= range[0]
+        && task.updatedAt <= range[1] && result;
     }
     return result;
   });

@@ -10,6 +10,7 @@ describe('Task', () => {
       propsData: {
         id: 12345,
         content: CONTENT,
+        updatedAt: new Date(),
       },
       listeners: {
         [EVENTS.TASK_CHANGE]: onChange,
@@ -24,6 +25,7 @@ describe('Task', () => {
     const EXPECT = {
       title: TITLE,
       content: CONTENT,
+      updatedAt: new Date(),
     };
 
     expect(onChange).toBeCalledTimes(1);
@@ -38,6 +40,7 @@ describe('Task', () => {
       propsData: {
         id: 12345,
         title: TITLE,
+        updatedAt: new Date(),
       },
       listeners: {
         'task:change': onChange,
@@ -66,6 +69,7 @@ describe('Task', () => {
       propsData: {
         id: ID,
         done: false,
+        updatedAt: new Date(),
       },
       listeners: {
         [EVENTS.TASK_DONE]: onDone,
@@ -88,6 +92,7 @@ describe('Task', () => {
       propsData: {
         id: ID,
         done: true,
+        updatedAt: new Date(),
       },
       listeners: {
         [EVENTS.TASK_UNDONE]: onUndone,
@@ -109,6 +114,7 @@ describe('Task', () => {
     const wrapper = shallowMount(Task, {
       propsData: {
         id: ID,
+        updatedAt: new Date(),
       },
       listeners: {
         [EVENTS.TASK_DELETE]: onDelete,
