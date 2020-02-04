@@ -43,10 +43,11 @@ export const actions = {
       error(err);
     }
   },
-  async createTask(context, task) {
-    info(`create task ${task.id} starting...`);
+  async createTask(context) {
+    info('create task starting...');
     try {
-      if (await this.$api.createTask(task)) {
+      const task = await this.$api.createTask();
+      if (task) {
         context.commit('createTask', task);
         info(`create task ${task.id} end successfuly`);
       }

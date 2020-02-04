@@ -61,8 +61,9 @@ describe('store:actions:createTask()', () => {
   let api;
 
   describe('api successfuly creates task', () => {
+    const TASK = { id: 0 };
     beforeEach(() => {
-      createTask = jest.fn(() => Promise.resolve(true));
+      createTask = jest.fn(() => Promise.resolve(TASK));
       commit = jest.fn();
       api = {
         createTask,
@@ -73,11 +74,9 @@ describe('store:actions:createTask()', () => {
     });
 
     it('calls api.create task and commits `createTask` mutation with TASK as a payload', async () => {
-      const TASK = { id: 123 };
-      await actions.createTask.call({ $api: api }, context, TASK);
+      await actions.createTask.call({ $api: api }, context);
 
       expect(createTask).toHaveBeenCalledTimes(1);
-      expect(createTask).toHaveBeenCalledWith(TASK);
       expect(commit).toHaveBeenCalledTimes(1);
       expect(commit).toHaveBeenCalledWith('createTask', TASK);
     });
@@ -100,7 +99,6 @@ describe('store:actions:createTask()', () => {
       await actions.createTask.call({ $api: api }, context, TASK);
 
       expect(createTask).toHaveBeenCalledTimes(1);
-      expect(createTask).toHaveBeenCalledWith(TASK);
       expect(commit).not.toHaveBeenCalled();
     });
   });
