@@ -30,7 +30,7 @@ import TaskFilter from '@/components/TaskFilter.vue';
 
 export const filterTasks = (tasks, filters) => {
   const { range, done } = filters;
-  const filtered = tasks.filter((task) => {
+  const filtered = (tasks || []).filter((task) => {
     let result = true;
     if (done) {
       result = task.done;
@@ -72,7 +72,7 @@ export default {
       return this.$store.state.tasks;
     },
     filteredTasks() {
-      return filterTasks(this.$store.state.tasks, this.data.filters);
+      return filterTasks(this.$store.state.tasks, this.filters);
     },
   },
   created() {

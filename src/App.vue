@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <task-list></task-list>
   </div>
 </template>
+
+<script>
+import TaskList from '@/views/TaskList.vue';
+
+export default {
+  components: {
+    'task-list': TaskList,
+  },
+};
+</script>
 
 <style>
 #app {

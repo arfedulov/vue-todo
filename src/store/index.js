@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { logger } from '../logger';
+import { api } from '../localStorageApi';
 
 const info = logger('info');
 const error = logger('error');
@@ -33,8 +34,8 @@ export const actions = {
   async syncTasks(context) {
     info('sync tasks starting...');
     try {
-      if (!await context.api.isFresh()) {
-        const tasks = await context.api.getTasks();
+      if (!await this.$api.isFresh()) {
+        const tasks = await this.$api.getTasks();
         context.commit('loadTasks', tasks);
       }
       info('sync tasks end successfuly');
@@ -45,7 +46,7 @@ export const actions = {
   async createTask(context, task) {
     info(`create task ${task.id} starting...`);
     try {
-      if (await context.api.createTask(task)) {
+      if (await this.$api.createTask(task)) {
         context.commit('createTask', task);
         info(`create task ${task.id} end successfuly`);
       }
@@ -56,7 +57,7 @@ export const actions = {
   async deleteTask(context, id) {
     info(`delete task ${id} starting...`);
     try {
-      if (await context.api.deleteTask(id)) {
+      if (await this.$api.deleteTask(id)) {
         context.commit('deleteTask', id);
         info(`delete task ${id} end successfuly`);
       }
@@ -67,7 +68,7 @@ export const actions = {
   async updateTask(context, task) {
     info(`update task ${task.id} starting...`);
     try {
-      if (await context.api.updateTask(task)) {
+      if (await this.$api.updateTask(task)) {
         context.commit('updateTask', task);
         info(`update task ${task.id} end successfuly`);
       }
@@ -77,8 +78,7 @@ export const actions = {
   },
 };
 
-export default new Vuex.Store({
-  api: {},
+const store = new Vuex.Store({
   state: {
     tasks: [],
   },
@@ -87,3 +87,7 @@ export default new Vuex.Store({
   modules: {
   },
 });
+
+store.$api = api;
+
+export default store;
