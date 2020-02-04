@@ -27,7 +27,7 @@ describe('Task', () => {
     };
 
     expect(onChange).toBeCalledTimes(1);
-    expect(onChange).toHaveBeenNthCalledWith(1, EXPECT);
+    expect(onChange.mock.calls[0][0]).toMatchObject(EXPECT);
   });
 
   it('emits `task:change` event on `content` change with updated `content` and previous `title` as a payload', () => {
@@ -55,7 +55,7 @@ describe('Task', () => {
     };
 
     expect(onChange).toBeCalledTimes(1);
-    expect(onChange).toHaveBeenNthCalledWith(1, EXPECT);
+    expect(onChange.mock.calls[0][0]).toMatchObject(EXPECT);
   });
 
   it('emits `task:done` event on checking `done` checkbox with task `id` as a payload', () => {

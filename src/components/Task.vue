@@ -1,5 +1,5 @@
 <template>
-  <article tabindex="0" @focus="editable=true" @blur="editable=false">
+  <article>
     <h1>
       <input v-if="editable" type="text" class="task-title-control" v-model="titleModel" />
       <template v-else>{{title}}</template>
@@ -10,6 +10,8 @@
     </p>
     <input type="checkbox" class="task-status-control" v-model="statusModel" />
     <button class="task-remove-control" @click="remove">delete</button>
+    <button v-if="!editable" @click="editable=true">edit</button>
+    <button v-else @click="editable=false">save</button>
   </article>
 </template>
 
@@ -73,8 +75,10 @@ export default {
     },
     onChange(propName, val) {
       this.$emit(EVENTS.TASK_CHANGE, {
+        id: this.id,
         title: this.title,
         content: this.content,
+        updatedAt: new Date(),
         [propName]: val,
       });
     },
