@@ -1,9 +1,21 @@
 <template>
-  <div>
-    <input type="checkbox" class="task-filter-done-control" v-model="doneModel" />
-    <input type="text" class="task-filter-date-range-from-control" v-model="fromModel" />
-    <input type="text" class="task-filter-date-range-to-control" v-model="toModel" />
-  </div>
+  <b-input-group>
+    <b-form-checkbox inline class="task-filter-done-control" v-model="doneModel">
+      display done also
+    </b-form-checkbox>
+    <b-form-input
+      placeholder="from date yyyy-mm-dd"
+      type="text"
+      class="task-filter-date-range-from-control"
+      v-model="fromModel"
+    />
+    <b-form-input
+      placeholder="to date yyyy-mm-dd"
+      type="text"
+      class="task-filter-date-range-to-control"
+      v-model="toModel"
+    />
+  </b-input-group>
 </template>
 
 <script>
@@ -67,3 +79,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .task-filter-done-control {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+  }
+</style>

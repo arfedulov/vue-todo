@@ -1,18 +1,22 @@
 <template>
-  <article>
-    <h1>
-      <input v-if="editable" type="text" class="task-title-control" v-model="titleModel" />
+  <b-card tag="article" :bg-variant="done ? 'success' : 'default'">
+    <b-form-checkbox class="task-status-control" v-model="statusModel" />
+    <b-card-title>
+      <b-form-input v-if="editable" type="text" class="task-title-control" v-model="titleModel" />
       <template v-else>{{title}}</template>
-    </h1>
-    <p>
-      <textarea v-if="editable" class="task-content-control" v-model="contentModel"></textarea>
+    </b-card-title>
+    <b-card-text>
+      <b-form-textarea v-if="editable" class="task-content-control" v-model="contentModel" />
       <template v-else>{{content}}</template>
-    </p>
-    <input type="checkbox" class="task-status-control" v-model="statusModel" />
-    <button class="task-remove-control" @click="remove">delete</button>
-    <button v-if="!editable" @click="editable=true">edit</button>
-    <button v-else @click="editable=false">save</button>
-  </article>
+    </b-card-text>
+    <footer>
+      <b-button-group>
+        <b-button variant="danger" class="task-remove-control" @click="remove">delete</b-button>
+        <b-button variant="warning" v-if="!editable" @click="editable=true">edit</b-button>
+        <b-button variant="primary" v-else @click="editable=false">save</b-button>
+      </b-button-group>
+    </footer>
+  </b-card>
 </template>
 
 <script>

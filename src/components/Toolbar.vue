@@ -1,5 +1,13 @@
 <template>
-  <button class="create-task-control" @click="createTask">create task</button>
+  <b-button-toolbar>
+    <b-button
+      variant="primary"
+      class="create-task-control"
+      @click="createTask"
+    >
+      create task
+    </b-button>
+  </b-button-toolbar>
 </template>
 
 <script>

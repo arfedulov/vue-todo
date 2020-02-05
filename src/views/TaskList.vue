@@ -1,29 +1,28 @@
 <template>
   <div>
-    <toolbar @toolbar:create-task="createTask"></toolbar>
+    <toolbar class="toolbar" @toolbar:create-task="createTask"></toolbar>
     <task-filter
+      class="task-filter"
       @task-filter:include-done="filterByDoneStatus(true)"
       @task-filter:exclude-done="filterByDoneStatus(false)"
       @task-filter:use-range="filterByRange"
     >
     </task-filter>
-    <ul>
-      <li v-for="task of filteredTasks" :key="task.id">
-        <task
-          class="task"
-          :id="task.id"
-          :title="task.title"
-          :content="task.content"
-          :done="task.done"
-          :updatedAt="task.updatedAt"
-          @task:delete="deleteTask"
-          @task:change="updateTask"
-          @task:done="updateTask({id: task.id, done: true})"
-          @task:undone="updateTask({id: task.id, done: false})"
-        >
-        </task>
-      </li>
-    </ul>
+    <div class="task-list">
+      <task
+        v-for="task of filteredTasks" :key="task.id"
+        class="task"
+        :id="task.id"
+        :title="task.title"
+        :content="task.content"
+        :done="task.done"
+        :updatedAt="task.updatedAt"
+        @task:delete="deleteTask"
+        @task:change="updateTask"
+        @task:done="updateTask({id: task.id, done: true})"
+        @task:undone="updateTask({id: task.id, done: false})"
+      />
+    </div>
   </div>
 </template>
 
@@ -106,3 +105,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .task-list {
+    padding: 10px;
+  }
+  .task {
+    max-width: 40em;
+    margin: 10px auto;
+  }
+  .task-filter {
+    margin: 25px auto;
+    width: fit-content;
+  }
+  .toolbar {
+    margin: 10px 25px;
+  }
+</style>
