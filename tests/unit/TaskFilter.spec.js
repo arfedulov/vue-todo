@@ -1,35 +1,41 @@
-import { shallowMount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
+import { BootstrapVue } from 'bootstrap-vue';
 import TaskFilter, { EVENTS } from '@/components/TaskFilter.vue';
+
+const localVue = createLocalVue();
+localVue.use(BootstrapVue);
 
 describe('TaskFilter', () => {
   it('emits `INCLUDE_DONE` event on checking `done` checkbox', () => {
     const onCheck = jest.fn();
-    const wrapper = shallowMount(TaskFilter, {
+    const wrapper = mount(TaskFilter, {
       propsData: {
         done: false,
       },
       listeners: {
         [EVENTS.INCLUDE_DONE]: onCheck,
       },
+      localVue,
     });
 
-    wrapper.find('.task-filter-done-control').trigger('click');
+    wrapper.find('.task-filter-done-control input').trigger('click');
 
     expect(onCheck).toHaveBeenCalledTimes(1);
   });
 
   it('emits `EXCLUDE_DONE` event on unchecking `done` checkbox', () => {
     const onCheck = jest.fn();
-    const wrapper = shallowMount(TaskFilter, {
+    const wrapper = mount(TaskFilter, {
       propsData: {
         done: true,
       },
       listeners: {
         [EVENTS.EXCLUDE_DONE]: onCheck,
       },
+      localVue,
     });
 
-    wrapper.find('.task-filter-done-control').trigger('click');
+    wrapper.find('.task-filter-done-control input').trigger('click');
 
     expect(onCheck).toHaveBeenCalledTimes(1);
   });
@@ -38,7 +44,7 @@ describe('TaskFilter', () => {
     const onRangeSelect = jest.fn();
     const FROM = new Date('2015-01-01');
     const TO = new Date('2015-01-15');
-    const wrapper = shallowMount(TaskFilter, {
+    const wrapper = mount(TaskFilter, {
       propsData: {
         from: FROM,
         to: TO,
@@ -46,6 +52,7 @@ describe('TaskFilter', () => {
       listeners: {
         [EVENTS.USE_RANGE]: onRangeSelect,
       },
+      localVue,
     });
 
     const INPUT_VALUE = '2020-01-15';
@@ -60,7 +67,7 @@ describe('TaskFilter', () => {
     const onRangeSelect = jest.fn();
     const FROM = new Date('2016-01-01');
     const TO = new Date('2016-01-15');
-    const wrapper = shallowMount(TaskFilter, {
+    const wrapper = mount(TaskFilter, {
       propsData: {
         from: FROM,
         to: TO,
@@ -68,6 +75,7 @@ describe('TaskFilter', () => {
       listeners: {
         [EVENTS.USE_RANGE]: onRangeSelect,
       },
+      localVue,
     });
 
     const INPUT_VALUE = '2020-01-21';

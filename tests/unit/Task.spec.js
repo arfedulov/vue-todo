@@ -1,12 +1,16 @@
-import { shallowMount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
+import { BootstrapVue } from 'bootstrap-vue';
 import Task, { EVENTS } from '@/components/Task.vue';
+
+const localVue = createLocalVue();
+localVue.use(BootstrapVue);
 
 describe('Task', () => {
   it('emits `task:change` event on `title` change with updated `title` and previous `content` as a payload', () => {
     const onChange = jest.fn(() => {});
     const CONTENT = 'asdfgh';
 
-    const wrapper = shallowMount(Task, {
+    const wrapper = mount(Task, {
       propsData: {
         id: 12345,
         content: CONTENT,
@@ -15,6 +19,7 @@ describe('Task', () => {
       listeners: {
         [EVENTS.TASK_CHANGE]: onChange,
       },
+      localVue,
     });
 
     const TITLE = 'qwert';
@@ -36,7 +41,7 @@ describe('Task', () => {
     const onChange = jest.fn(() => {});
     const TITLE = '1234';
 
-    const wrapper = shallowMount(Task, {
+    const wrapper = mount(Task, {
       propsData: {
         id: 12345,
         title: TITLE,
@@ -45,6 +50,7 @@ describe('Task', () => {
       listeners: {
         'task:change': onChange,
       },
+      localVue,
     });
 
     const CONTENT = 'poiuy';
@@ -65,7 +71,7 @@ describe('Task', () => {
     const onDone = jest.fn(() => {});
     const ID = 5453645;
 
-    const wrapper = shallowMount(Task, {
+    const wrapper = mount(Task, {
       propsData: {
         id: ID,
         done: false,
@@ -74,9 +80,10 @@ describe('Task', () => {
       listeners: {
         [EVENTS.TASK_DONE]: onDone,
       },
+      localVue,
     });
 
-    wrapper.find('.task-status-control').trigger('click');
+    wrapper.find('.task-status-control input').trigger('click');
 
     const EXPECT = ID;
 
@@ -88,7 +95,7 @@ describe('Task', () => {
     const onUndone = jest.fn(() => {});
     const ID = 5355464;
 
-    const wrapper = shallowMount(Task, {
+    const wrapper = mount(Task, {
       propsData: {
         id: ID,
         done: true,
@@ -97,9 +104,10 @@ describe('Task', () => {
       listeners: {
         [EVENTS.TASK_UNDONE]: onUndone,
       },
+      localVue,
     });
 
-    wrapper.find('.task-status-control').trigger('click');
+    wrapper.find('.task-status-control input').trigger('click');
 
     const EXPECT = ID;
 
@@ -111,7 +119,7 @@ describe('Task', () => {
     const ID = 65785907;
     const onDelete = jest.fn(() => {});
 
-    const wrapper = shallowMount(Task, {
+    const wrapper = mount(Task, {
       propsData: {
         id: ID,
         updatedAt: new Date(),
@@ -119,6 +127,7 @@ describe('Task', () => {
       listeners: {
         [EVENTS.TASK_DELETE]: onDelete,
       },
+      localVue,
     });
 
     wrapper.find('.task-remove-control').trigger('click');
