@@ -2,8 +2,17 @@
   <b-card tag="article" :bg-variant="done ? 'success' : 'default'">
     <b-form-checkbox class="task-status-control" v-model="statusModel" />
     <b-card-title>
-      <b-form-input v-if="editable" type="text" class="task-title-control" v-model="titleModel" />
+      <b-form-input
+        :state="!errors.title.length"
+        v-if="editable"
+        type="text"
+        class="task-title-control"
+        v-model="titleModel"
+      />
       <template v-else>{{title}}</template>
+      <b-form-invalid-feedback v-for="message of errors.title" :key="message" :state="true">
+        {{message}}
+      </b-form-invalid-feedback>
     </b-card-title>
     <b-card-text>
       <b-form-textarea v-if="editable" class="task-content-control" v-model="contentModel" />
@@ -13,7 +22,7 @@
       <b-button-group>
         <b-button variant="danger" class="task-remove-control" @click="remove">delete</b-button>
         <b-button variant="warning" v-if="!editable" @click="editable=true">edit</b-button>
-        <b-button variant="primary" v-else @click="editable=false">save</b-button>
+        <b-button variant="primary" v-else @click="onSubmit">save</b-button>
       </b-button-group>
     </footer>
   </b-card>
@@ -39,6 +48,9 @@ export default {
   data() {
     return {
       editable: false,
+      errors: {
+        title: [],
+      },
     };
   },
   computed: {
@@ -86,6 +98,27 @@ export default {
         updatedAt: new Date(),
         [propName]: val,
       });
+    },
+    validateForm() {
+      this.errors = {
+        title: [],
+      };
+      if (this.title !== '' && this.title.length <= 25) {
+        return true;
+      }
+      if (this.title === '') {
+        this.errors.title.push('Title field should not be empty');
+      }
+      if (this.title.length > 25) {
+        this.errors.title.push('Title should not be longer than 25 characters');
+      }
+      return false;
+    },
+    onSubmit() {
+      const valid = this.validateForm();
+      if (valid) {
+        this.editable = false;
+      }
     },
   },
 };

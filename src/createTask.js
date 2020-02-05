@@ -6,8 +6,6 @@ export const createTask = () => ({
   updatedAt: new Date(),
 });
 
-export const parseTask = (task) => {
-  return { ...task, updatedAt: new Date(task.updatedAt) };
-};
+export const parseTask = task => ({ ...task, updatedAt: new Date(task.updatedAt) });
 
 export default createTask;
