@@ -1,5 +1,5 @@
 import { logger } from './logger';
-import { createTask } from './createTask';
+import { createTask, parseTask } from './createTask';
 
 const error = logger('error');
 
@@ -8,7 +8,8 @@ let isFresh = false;
 export const api = {
   getTasks: async () => {
     try {
-      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+        .map(parseTask);
       isFresh = true;
       return tasks;
     } catch (err) {
@@ -18,7 +19,8 @@ export const api = {
   },
   createTask: async () => {
     try {
-      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+        .map(parseTask);
       const task = createTask();
       tasks.push(task);
       localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -31,7 +33,8 @@ export const api = {
   },
   deleteTask: async (id) => {
     try {
-      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+        .map(parseTask);
       localStorage.setItem('tasks', JSON.stringify(tasks.filter(t => t.id !== id)));
       isFresh = false;
       return true;
@@ -42,7 +45,8 @@ export const api = {
   },
   updateTask: async (task) => {
     try {
-      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+        .map(parseTask);
       localStorage.setItem('tasks', JSON.stringify(tasks.reduce((acc, t) => {
         if (t.id === task.id) {
           acc.push({ ...t, ...task });
