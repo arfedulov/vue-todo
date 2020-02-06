@@ -9,7 +9,7 @@ import TaskList from '@/views/TaskList.vue';
 
 export default {
   components: {
-    'task-list': TaskList,
+    TaskList,
   },
 };
 </script>

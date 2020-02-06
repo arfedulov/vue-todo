@@ -57,9 +57,9 @@ export const filterTasks = (tasks, filters) => {
 export default {
   name: 'task-list',
   components: {
-    task: Task,
-    'task-filter': TaskFilter,
-    toolbar: Toolbar,
+    Task,
+    TaskFilter,
+    Toolbar,
   },
   data() {
     return {
