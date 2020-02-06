@@ -30,11 +30,13 @@ describe('Task', () => {
     const EXPECT = {
       title: TITLE,
       content: CONTENT,
-      updatedAt: new Date(),
     };
 
     expect(onChange).toBeCalledTimes(1);
     expect(onChange.mock.calls[0][0]).toMatchObject(EXPECT);
+    expect(onChange.mock.calls[0][0].updatedAt instanceof Date).toBe(true);
+    const diff = Math.abs(onChange.mock.calls[0][0].updatedAt.getTime() - new Date().getTime());
+    expect(diff).toBeLessThanOrEqual(10000);
   });
 
   it('emits `task:change` event on `content` change with updated `content` and previous `title` as a payload', () => {
