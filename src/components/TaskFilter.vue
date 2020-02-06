@@ -38,9 +38,9 @@ const formatDate = (date) => {
 export default {
   name: 'task-filter',
   props: {
-    done: Boolean,
-    from: Date,
-    to: Date,
+    done: { type: Boolean, default: false },
+    from: { type: Date, default: null },
+    to: { type: Date, default: null },
   },
   computed: {
     doneModel: {
