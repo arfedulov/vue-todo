@@ -21,7 +21,7 @@
     <footer>
       <b-button-group>
         <b-button variant="danger" class="task-remove-control" @click="removeTask">delete</b-button>
-        <b-button variant="warning" v-if="!editable" @click="editable=true">edit</b-button>
+        <b-button variant="warning" v-if="!editable" @click="turnOnEditableMode">edit</b-button>
         <b-button variant="primary" v-else @click="onSubmit">save</b-button>
       </b-button-group>
     </footer>
@@ -125,6 +125,9 @@ export default {
       if (valid) {
         this.editable = false;
       }
+    },
+    turnOnEditableMode() {
+      this.editable = true;
     },
   },
 };
