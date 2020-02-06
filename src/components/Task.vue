@@ -10,7 +10,7 @@
         v-model="titleModel"
       />
       <template v-else>{{title}}</template>
-      <b-form-invalid-feedback v-for="message of errors.title" :key="message" :state="true">
+      <b-form-invalid-feedback v-for="message of titleErrors" :key="message" :state="true">
         {{message}}
       </b-form-invalid-feedback>
     </b-card-title>
@@ -48,9 +48,7 @@ export default {
   data() {
     return {
       editable: false,
-      errors: {
-        title: [],
-      },
+      titleErrors: [],
     };
   },
   computed: {
@@ -82,7 +80,7 @@ export default {
       return this.done ? 'success' : 'default';
     },
     titleValueIsValid() {
-      return !this.errors.title.length;
+      return !this.titleErrors.length;
     },
   },
   methods: {
@@ -106,17 +104,15 @@ export default {
       });
     },
     validateForm() {
-      this.errors = {
-        title: [],
-      };
+      this.titleErrors = [];
       if (this.title !== '' && this.title.length <= 25) {
         return true;
       }
       if (this.title === '') {
-        this.errors.title.push('Title field should not be empty');
+        this.titleErrors.push('Title field should not be empty');
       }
       if (this.title.length > 25) {
-        this.errors.title.push('Title should not be longer than 25 characters');
+        this.titleErrors.push('Title should not be longer than 25 characters');
       }
       return false;
     },
