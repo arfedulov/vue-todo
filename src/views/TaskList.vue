@@ -26,28 +26,7 @@
 import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
 import Toolbar from '@/components/Toolbar.vue';
-
-const isValidDate = date => date && !Number.isNaN(date.getTime());
-
-export const filterTasks = (tasks, filters) => {
-  const { range, done: includeDoneAlso } = filters;
-  const filtered = (tasks || []).filter((task) => {
-    let result = includeDoneAlso ? true : !task.done;
-    if (isValidDate(range[0])) {
-      result = task.updatedAt >= range[0] && result;
-    }
-    if (isValidDate(range[1])) {
-      result = task.updatedAt <= range[1] && result;
-    }
-    if (isValidDate(range[0]) && isValidDate(range[1])) {
-      result = task.updatedAt >= range[0]
-        && task.updatedAt <= range[1] && result;
-    }
-    return result;
-  });
-
-  return filtered;
-};
+import filterTasks from '@/utils/filterTasks';
 
 export default {
   name: 'task-list',
