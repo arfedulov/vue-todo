@@ -105,16 +105,13 @@ export default {
     },
     validateForm() {
       this.titleErrors = [];
-      if (this.title !== '' && this.title.length <= 25) {
-        return true;
-      }
       if (this.title === '') {
         this.titleErrors.push('Title field should not be empty');
       }
       if (this.title.length > 25) {
         this.titleErrors.push('Title should not be longer than 25 characters');
       }
-      return false;
+      return this.titleErrors.length === 0;
     },
     onSubmit() {
       const valid = this.validateForm();
