@@ -12,11 +12,7 @@
       <task
         v-for="task of filteredTasks" :key="task.id"
         class="task"
-        :id="task.id"
-        :title="task.title"
-        :content="task.content"
-        :done="task.done"
-        :updatedAt="task.updatedAt"
+        v-bind="task"
         @task:delete="deleteTask"
         @task:change="updateTask"
         @task:done="updateTask({id: task.id, done: true})"
