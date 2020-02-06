@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
 import Toolbar from '@/components/Toolbar.vue';
@@ -53,18 +53,15 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('syncTasks');
+    this.syncTasks();
   },
   methods: {
-    deleteTask(id) {
-      this.$store.dispatch('deleteTask', id);
-    },
-    createTask() {
-      this.$store.dispatch('createTask');
-    },
-    updateTask(task) {
-      this.$store.dispatch('updateTask', task);
-    },
+    ...mapActions([
+      'deleteTask',
+      'createTask',
+      'updateTask',
+      'syncTasks',
+    ]),
     filterByRange(range) {
       this.filters = {
         ...this.filters,
