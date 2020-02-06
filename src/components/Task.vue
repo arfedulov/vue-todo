@@ -1,5 +1,5 @@
 <template>
-  <b-card tag="article" :bg-variant="done ? 'success' : 'default'">
+  <b-card tag="article" :bg-variant="cardBackground">
     <b-form-checkbox class="task-status-control" v-model="statusModel" />
     <b-card-title>
       <b-form-input
@@ -77,6 +77,9 @@ export default {
       set(val) {
         this.setStatus(val);
       },
+    },
+    cardBackground() {
+      return this.done ? 'success' : 'default';
     },
   },
   methods: {
