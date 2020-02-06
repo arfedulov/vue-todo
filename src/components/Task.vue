@@ -3,7 +3,7 @@
     <b-form-checkbox class="task-status-control" v-model="statusModel" />
     <b-card-title>
       <b-form-input
-        :state="!errors.title.length"
+        :state="titleValueIsValid"
         v-if="editable"
         type="text"
         class="task-title-control"
@@ -80,6 +80,9 @@ export default {
     },
     cardBackground() {
       return this.done ? 'success' : 'default';
+    },
+    titleValueIsValid() {
+      return !this.errors.title.length;
     },
   },
   methods: {
