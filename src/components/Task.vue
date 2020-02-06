@@ -20,7 +20,7 @@
     </b-card-text>
     <footer>
       <b-button-group>
-        <b-button variant="danger" class="task-remove-control" @click="remove">delete</b-button>
+        <b-button variant="danger" class="task-remove-control" @click="removeTask">delete</b-button>
         <b-button variant="warning" v-if="!editable" @click="editable=true">edit</b-button>
         <b-button variant="primary" v-else @click="onSubmit">save</b-button>
       </b-button-group>
@@ -86,7 +86,7 @@ export default {
     },
   },
   methods: {
-    remove() {
+    removeTask() {
       this.$emit(EVENTS.TASK_DELETE, this.id);
     },
     setStatus(done) {
