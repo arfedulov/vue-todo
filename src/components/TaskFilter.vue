@@ -29,7 +29,10 @@ const formatDate = (date) => {
   if (!date) {
     return '';
   }
-  return `${date.getFullYear()}-${date.getMonth().toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  const year = date.getFullYear();
+  const month = date.getMonth().toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export default {
