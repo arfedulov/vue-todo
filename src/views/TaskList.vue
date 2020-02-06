@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
 import Toolbar from '@/components/Toolbar.vue';
@@ -44,11 +45,11 @@ export default {
     };
   },
   computed: {
-    tasks() {
-      return this.$store.state.tasks;
-    },
+    ...mapState({
+      tasks: state => state.tasks,
+    }),
     filteredTasks() {
-      return filterTasks(this.$store.state.tasks, this.filters);
+      return filterTasks(this.tasks, this.filters);
     },
   },
   created() {
