@@ -31,46 +31,46 @@ export const mutations = {
 };
 
 export const actions = {
-  async syncTasks(context) {
+  async syncTasks({ commit }) {
     info('sync tasks starting...');
     try {
       if (!await this.$api.isFresh()) {
         const tasks = await this.$api.getTasks();
-        context.commit('loadTasks', tasks);
+        commit('loadTasks', tasks);
       }
       info('sync tasks end successfuly');
     } catch (err) {
       error(err);
     }
   },
-  async createTask(context) {
+  async createTask({ commit }) {
     info('create task starting...');
     try {
       const task = await this.$api.createTask();
       if (task) {
-        context.commit('createTask', task);
+        commit('createTask', task);
         info(`create task ${task.id} end successfuly`);
       }
     } catch (err) {
       error(err);
     }
   },
-  async deleteTask(context, id) {
+  async deleteTask({ commit }, id) {
     info(`delete task ${id} starting...`);
     try {
       if (await this.$api.deleteTask(id)) {
-        context.commit('deleteTask', id);
+        commit('deleteTask', id);
         info(`delete task ${id} end successfuly`);
       }
     } catch (err) {
       error(err);
     }
   },
-  async updateTask(context, task) {
+  async updateTask({ commit }, task) {
     info(`update task ${task.id} starting...`);
     try {
       if (await this.$api.updateTask(task)) {
-        context.commit('updateTask', task);
+        commit('updateTask', task);
         info(`update task ${task.id} end successfuly`);
       }
     } catch (err) {
