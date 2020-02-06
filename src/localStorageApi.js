@@ -2,13 +2,14 @@ import { logger } from './logger';
 import { createTask, parseTask } from './createTask';
 
 const error = logger('error');
+const ITEM_KEY = 'tasks';
 
 let isFresh = false;
 
 export const api = {
   getTasks: async () => {
     try {
-      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+      const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
       isFresh = true;
       return tasks;
@@ -19,11 +20,11 @@ export const api = {
   },
   createTask: async () => {
     try {
-      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+      const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
       const task = createTask();
       tasks.push(task);
-      localStorage.setItem('tasks', JSON.stringify(tasks));
+      localStorage.setItem(ITEM_KEY, JSON.stringify(tasks));
       isFresh = false;
       return task;
     } catch (err) {
@@ -33,9 +34,9 @@ export const api = {
   },
   deleteTask: async (id) => {
     try {
-      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+      const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
-      localStorage.setItem('tasks', JSON.stringify(tasks.filter(t => t.id !== id)));
+      localStorage.setItem(ITEM_KEY, JSON.stringify(tasks.filter(t => t.id !== id)));
       isFresh = false;
       return true;
     } catch (err) {
@@ -45,9 +46,9 @@ export const api = {
   },
   updateTask: async (task) => {
     try {
-      const tasks = (JSON.parse(localStorage.getItem('tasks')) || [])
+      const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
-      localStorage.setItem('tasks', JSON.stringify(tasks.reduce((acc, t) => {
+      localStorage.setItem(ITEM_KEY, JSON.stringify(tasks.reduce((acc, t) => {
         if (t.id === task.id) {
           acc.push({ ...t, ...task });
         } else {
