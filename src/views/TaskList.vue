@@ -27,8 +27,7 @@ import Task from '@/components/Task.vue';
 import TaskFilter from '@/components/TaskFilter.vue';
 import Toolbar from '@/components/Toolbar.vue';
 
-// eslint-disable-next-line no-restricted-globals
-const isValidDate = date => date && !isNaN(date.getTime());
+const isValidDate = date => date && !Number.isNaN(date.getTime());
 
 export const filterTasks = (tasks, filters) => {
   const { range, done: includeDoneAlso } = filters;
