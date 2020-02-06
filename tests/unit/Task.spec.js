@@ -6,7 +6,7 @@ const localVue = createLocalVue();
 localVue.use(BootstrapVue);
 
 describe('Task', () => {
-  it('emits `task:change` event on `title` change with updated `title` and previous `content` as a payload', () => {
+  it('emits `task:change` event on `title` change', () => {
     const onChange = jest.fn(() => {});
     const CONTENT = 'asdfgh';
 
@@ -39,7 +39,7 @@ describe('Task', () => {
     expect(diff).toBeLessThanOrEqual(10000);
   });
 
-  it('emits `task:change` event on `content` change with updated `content` and previous `title` as a payload', () => {
+  it('emits `task:change` event on `content` change', () => {
     const onChange = jest.fn(() => {});
     const TITLE = '1234';
 
