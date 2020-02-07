@@ -24,8 +24,7 @@ describe('Task', () => {
 
     const TITLE = 'qwert';
 
-    wrapper.vm.editable = true;
-    wrapper.find('.task-title-control').setValue(TITLE);
+    wrapper.vm.onChange('title', TITLE);
 
     const EXPECT = {
       title: TITLE,
@@ -57,8 +56,7 @@ describe('Task', () => {
 
     const CONTENT = 'poiuy';
 
-    wrapper.vm.editable = true;
-    wrapper.find('.task-content-control').setValue(CONTENT);
+    wrapper.vm.onChange('content', CONTENT);
 
     const EXPECT = {
       title: TITLE,
