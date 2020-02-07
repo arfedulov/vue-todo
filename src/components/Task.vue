@@ -88,11 +88,8 @@ export default {
       this.$emit(EVENTS.TASK_DELETE, this.id);
     },
     setStatus(done) {
-      if (done) {
-        this.$emit(EVENTS.TASK_DONE, this.id);
-      } else {
-        this.$emit(EVENTS.TASK_UNDONE, this.id);
-      }
+      const event = done ? EVENTS.TASK_DONE : EVENTS.TASK_UNDONE;
+      this.$emit(event, this.id);
     },
     onChange(propName, val) {
       this.$emit(EVENTS.TASK_CHANGE, {

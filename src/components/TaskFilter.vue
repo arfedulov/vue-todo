@@ -70,11 +70,8 @@ export default {
   },
   methods: {
     toggleDone(done) {
-      if (!done) {
-        this.$emit(EVENTS.EXCLUDE_DONE);
-      } else {
-        this.$emit(EVENTS.INCLUDE_DONE);
-      }
+      const event = done ? EVENTS.INCLUDE_DONE : EVENTS.EXCLUDE_DONE;
+      this.$emit(event);
     },
     setRange(range) {
       this.$emit(EVENTS.USE_RANGE, range);
