@@ -7,7 +7,7 @@ const ITEM_KEY = 'tasks';
 let isFresh = false;
 
 export const api = {
-  getTasks: async () => {
+  getTasks: () => {
     try {
       const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
@@ -18,7 +18,7 @@ export const api = {
       return false;
     }
   },
-  createTask: async () => {
+  createTask: () => {
     try {
       const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
@@ -32,7 +32,7 @@ export const api = {
       return false;
     }
   },
-  deleteTask: async (id) => {
+  deleteTask: (id) => {
     try {
       const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
@@ -44,7 +44,7 @@ export const api = {
       return false;
     }
   },
-  updateTask: async (task) => {
+  updateTask: (task) => {
     try {
       const tasks = (JSON.parse(localStorage.getItem(ITEM_KEY)) || [])
         .map(parseTask);
@@ -63,7 +63,7 @@ export const api = {
       return false;
     }
   },
-  isFresh: async () => isFresh,
+  isFresh: () => isFresh,
 };
 
 export default api;
