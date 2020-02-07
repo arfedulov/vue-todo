@@ -1,19 +1,19 @@
 <template>
   <b-input-group>
-    <b-form-checkbox inline class="task-filter-done-control" v-model="doneModel">
+    <b-form-checkbox inline class="task-filter-done-control" v-model="showFinished">
       display done also
     </b-form-checkbox>
     <b-form-input
       placeholder="from date yyyy-mm-dd"
       type="text"
       class="task-filter-date-range-from-control"
-      v-model="fromModel"
+      v-model="showFromDate"
     />
     <b-form-input
       placeholder="to date yyyy-mm-dd"
       type="text"
       class="task-filter-date-range-to-control"
-      v-model="toModel"
+      v-model="showToDate"
     />
   </b-input-group>
 </template>
@@ -43,7 +43,7 @@ export default {
     to: { type: Date, default: null },
   },
   computed: {
-    doneModel: {
+    showFinished: {
       get() {
         return this.done;
       },
@@ -51,7 +51,7 @@ export default {
         this.toggleDone(val);
       },
     },
-    fromModel: {
+    showFromDate: {
       get() {
         return formatDate(this.from);
       },
@@ -59,7 +59,7 @@ export default {
         this.setRange([new Date(val), this.to]);
       },
     },
-    toModel: {
+    showToDate: {
       get() {
         return formatDate(this.to);
       },

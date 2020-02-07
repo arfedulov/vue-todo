@@ -1,13 +1,13 @@
 <template>
   <b-card tag="article" :bg-variant="cardBackground">
-    <b-form-checkbox class="task-status-control" v-model="statusModel" />
+    <b-form-checkbox class="task-status-control" v-model="taskStatus" />
     <b-card-title>
       <b-form-input
         :state="titleValueIsValid"
         v-if="editable"
         type="text"
         class="task-title-control"
-        v-model="titleModel"
+        v-model="taskTitle"
       />
       <template v-else>{{title}}</template>
       <b-form-invalid-feedback v-for="message of titleErrors" :key="message" :state="true">
@@ -15,7 +15,7 @@
       </b-form-invalid-feedback>
     </b-card-title>
     <b-card-text>
-      <b-form-textarea v-if="editable" class="task-content-control" v-model="contentModel" />
+      <b-form-textarea v-if="editable" class="task-content-control" v-model="taskDescription" />
       <template v-else>{{content}}</template>
     </b-card-text>
     <footer>
@@ -52,7 +52,7 @@ export default {
     };
   },
   computed: {
-    titleModel: {
+    taskTitle: {
       get() {
         return this.title;
       },
@@ -60,7 +60,7 @@ export default {
         this.onChange('title', val);
       },
     },
-    contentModel: {
+    taskDescription: {
       get() {
         return this.content;
       },
@@ -68,7 +68,7 @@ export default {
         this.onChange('content', val);
       },
     },
-    statusModel: {
+    taskStatus: {
       get() {
         return this.done;
       },
